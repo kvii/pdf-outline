@@ -9,3 +9,7 @@ freeze:
 .PHONY: test
 test:
 	python -m unittest
+
+.PHONY: init
+init:
+	python -m venv .env
