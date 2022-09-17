@@ -75,6 +75,12 @@ class TestParse(unittest.TestCase):
                 isErr=True,
                 want=[],
             ),
+            TestCase(
+                name='负数',
+                s="a -1",
+                isErr=False,
+                want=[OutlineItem(name='a', page=-1, children=[])],
+            ),
         ]
 
         for v in data:

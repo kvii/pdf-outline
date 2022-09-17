@@ -55,7 +55,7 @@ def parse_reader(r: io.TextIOBase) -> List[OutlineItem]:
     return li
 
 
-_reg_outline = re.compile(r'^(\t*)([^\s].*)\s+(\d+)$')
+_reg_outline = re.compile(r'^(\t*)([^\s].*)\s+(-?\d+)$')
 """书签正则"""
 
 
