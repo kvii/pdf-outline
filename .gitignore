@@ -4,6 +4,7 @@ __pycache__
 .vscode
 .idea
 .pytest_cache
+data
 
 原文件.pdf
 目录.txt

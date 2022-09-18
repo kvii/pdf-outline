@@ -21,11 +21,11 @@ class Args(Protocol):
 parser = argparse.ArgumentParser(description='pdf 目录添加')
 parser.add_argument('--offset', '-o',  type=int, default=0,
                     metavar='int', help='目录偏移量')
-parser.add_argument('--outline',  type=str, default='目录.txt',
+parser.add_argument('--outline',  type=str, default='data/目录.txt',
                     metavar='path', help='目录文件路径')
-parser.add_argument('--src',  type=str, default='原文件.pdf',
+parser.add_argument('--src',  type=str, default='data/原文件.pdf',
                     metavar='path', help='原文件路径')
-parser.add_argument('--dest',  type=str, default='结果.pdf',
+parser.add_argument('--dest',  type=str, default='data/结果.pdf',
                     metavar='path', help='结果文件路径')
 args: Args = parser.parse_args()
 

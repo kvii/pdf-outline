@@ -1,0 +1,7 @@
+services:
+  app:
+    build: .
+    volumes:
+      - type: bind
+        source: data
+        target: /app/data
