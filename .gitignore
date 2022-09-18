@@ -5,6 +5,7 @@ __pycache__
 .idea
 .pytest_cache
 data
+.devcontainer
 
 原文件.pdf
 目录.txt
