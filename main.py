@@ -3,7 +3,7 @@ from typing import Protocol
 
 import pikepdf as pp
 
-from parse import OutlineItem, parse_reader
+from outline import OutlineItem, parse_reader
 
 
 class Args(Protocol):
@@ -29,20 +29,20 @@ parser.add_argument('--dest',  type=str, default='data/结果.pdf',
                     metavar='path', help='结果文件路径')
 args: Args = parser.parse_args()
 
-with open(args.outline, encoding='utf-8') as f:
-    items = parse_reader(f)
 
-
-def change(item: OutlineItem) -> pp.OutlineItem:
+def _convert(item: OutlineItem) -> pp.OutlineItem:
     oi = pp.OutlineItem(item['name'], item['page']+args.offset-1)
     for sub in item['children']:
-        oi.children.append(change(sub))
+        oi.children.append(_convert(sub))
     return oi
 
+
+with open(args.outline, encoding='utf-8') as f:
+    items = parse_reader(f)
 
 with pp.Pdf.open(args.src) as pdf:
     with pdf.open_outline() as outline:
         outline.root.clear()
         for item in items:
-            outline.root.append(change(item))
+            outline.root.append(_convert(item))
     pdf.save(args.dest)

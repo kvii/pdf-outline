@@ -5,13 +5,10 @@ from typing import List, TypedDict
 
 class OutlineItem(TypedDict):
     """目录项目"""
-
     name: str
     """目录名"""
-
     page: int
     """页号"""
-
     children: List["OutlineItem"]
     """子目录"""
 
@@ -67,3 +64,21 @@ def _parse_line(s: str):
 
     depth, name, page = m.groups('')
     return depth.count('\t'), name, int(page)
+
+
+def format_str(items: List[OutlineItem]) -> str:
+    """将目录数据格式化为字符串"""
+    with io.StringIO() as w:
+        format_writer(w, items)
+        return w.getvalue()
+
+
+def format_writer(w: io.TextIOBase, items: List[OutlineItem]):
+    """将目录格式化到流中"""
+    def f(item: OutlineItem, indent: str):
+        w.write(f"{indent}{item['name']} {item['page']}\n")
+        for sub in item['children']:
+            f(sub, indent+'\t')
+
+    for item in items:
+        f(item, '')
