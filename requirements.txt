@@ -1,10 +1,5 @@
-autopep8==2.0.1
 deprecation==2.1.0
-flake8==6.0.0
-lxml==4.9.2
-mccabe==0.7.0
-packaging==23.0
-pikepdf==7.1.1
-Pillow==9.4.0
-pycodestyle==2.10.0
-pyflakes==3.0.1
+lxml==4.9.3
+packaging==23.2
+pikepdf==8.5.1
+Pillow==10.0.1
