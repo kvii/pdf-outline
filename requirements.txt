@@ -1,5 +1,6 @@
-deprecation==2.1.0
+Deprecated==1.2.14
 lxml==4.9.3
 packaging==23.2
-pikepdf==8.5.1
-Pillow==10.0.1
+pikepdf==8.7.1
+Pillow==10.1.0
+wrapt==1.16.0
