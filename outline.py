@@ -29,7 +29,10 @@ def parse_reader(r: io.TextIOBase) -> List[OutlineItem]:
     for s in r:
         if s.strip() == "":
             continue
-
+        
+        if _reg_comment.match(s):
+            continue
+        
         depth, name, page = _parse_line(s)
         if depth > len(parents):
             raise ParseError(f'标题缩进数量错误 {name}')
@@ -54,6 +57,9 @@ def parse_reader(r: io.TextIOBase) -> List[OutlineItem]:
 
 _reg_outline = re.compile(r'^(\t*)([^\s].*)\s+(-?\d+)$')
 """书签正则"""
+
+_reg_comment = re.compile(r'^--')
+"""注释正则"""
 
 
 def _parse_line(s: str):

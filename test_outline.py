@@ -79,6 +79,12 @@ class TestParse(unittest.TestCase):
                 isErr=False,
                 want=[OutlineItem(name='a', page=-1, children=[])],
             ),
+            TestCase(
+                name='包含注释',
+                s="-- foo\na 1\n",
+                isErr=False,
+                want=[OutlineItem(name='a', page=1, children=[])],
+            ),
         ]
 
         for v in data:
