@@ -8,6 +8,7 @@ from outline import OutlineItem, format_writer
 
 class Args(Protocol):
     """命令行参数"""
+
     offset: int
     """偏移量"""
     src: str
@@ -16,13 +17,29 @@ class Args(Protocol):
     """目录文件路径"""
 
 
-parser = ArgumentParser(description='pdf 目录读取')
-parser.add_argument('--offset', '-o',  type=int, default=0,
-                    metavar='int', help='目录偏移量')
-parser.add_argument('--outline',  type=str, default='data/目录.txt',
-                    metavar='path', help='目录文件路径')
-parser.add_argument('--src',  type=str, default='data/原文件.pdf',
-                    metavar='path', help='原文件路径')
+parser = ArgumentParser(description="pdf 目录读取")
+parser.add_argument(
+    "--offset",
+    "-o",
+    type=int,
+    default=0,
+    metavar="int",
+    help="目录偏移量",
+)
+parser.add_argument(
+    "--outline",
+    type=str,
+    default="data/目录.txt",
+    metavar="path",
+    help="目录文件路径",
+)
+parser.add_argument(
+    "--src",
+    type=str,
+    default="data/原文件.pdf",
+    metavar="path",
+    help="原文件路径",
+)
 args: Args = parser.parse_args()
 
 
@@ -34,12 +51,15 @@ def _convert(item: pp.OutlineItem, offset: int) -> OutlineItem:
 
 
 def _page_of(item: pp.OutlineItem) -> int:
+    if item.action is not None and item.action.get("/S") == "/GoTo":
+        li = item.action.get("/D")
+        page = pp.Page(li[0])
+        return page.index
     if isinstance(item.destination, pp.Array):
         page = pp.Page(item.destination[0])
         return page.index
-    else:
-        print(f"can't parse {item}")
-        return 0
+    print(f"can't parse {item} {type(item.destination)}")
+    return 0
 
 
 items: List[OutlineItem] = []
@@ -49,5 +69,5 @@ with pp.Pdf.open(args.src) as pdf:
         for item in outlines.root:
             items.append(_convert(item, args.offset))
 
-with open(args.outline, 'w') as w:
+with open(args.outline, "w") as w:
     format_writer(w, items)
